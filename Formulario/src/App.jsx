@@ -1,32 +1,67 @@
 import { useState } from 'react'
+import Pix from "./assets/pix.png"
+import Bubblebee from "./assets/bubblebee.png"
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [pagamento, setPagamento] = useState("")
+  const [comprar, setComprar] = useState(false)
+
+  function ComprarItem() {
+    setComprar(true)
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className='Main'>
+      <div className='Fone'>
+      <h1>Fone do Bubblebee</h1>
+      <img src={Bubblebee} alt="Bubblebee" className='Bee'/>
+      <h2>Somente R$ 999,99</h2>
+      <button className='Button' onClick={ComprarItem}>Comprar</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      {comprar ? <>
+        <h2>Opções de Pagamento: </h2>
+    <label>Tipo de Pagamento: </label>
+                <select onChange={(e) => setPagamento(e.target.value)} value={pagamento}>
+                    <option value="" >Selecione Uma Opção</option>
+                    <option value="credito" >Cartão de Crédito</option>
+                    <option value="pix" >Pix</option>
+                    <option value="boleto" >Boleto</option>
+                </select>
+
+                {pagamento === "credito" && (
+                  <>
+                                    <h3>Preencha os Dados: </h3>
+                  <label>Digite o número do cartão de crédito:</label>
+                  <input type="text" placeholder="Digite o número do cartão de crédito" />
+                  <label>Digite o nome do titular:</label>
+                  <input type="text" placeholder="Digite o nome do titular" />
+                  <label type="number" >Digite o CVV:</label>
+                  <input type="number" placeholder="Digite o CVV" />
+                  <label>Digite a data de validade:</label>
+                  <input type="date" placeholder="Digite a data de validade" />
+                  </>
+                )}
+
+                {pagamento === "pix" && (
+                  <>
+                  <h3>Escaneie o QR code: </h3>
+                  <img src={Pix} alt="QR Code" />
+                  </>
+                )}
+
+                {pagamento === "boleto" && (
+                  <>
+                  <h3>Preencha os Dados: </h3>
+                  <label>Digite o número do CPF:</label>
+                  <input type="text" placeholder="Digite o número do CPF" />
+                  <label>Digite a senha do seu banco: </label>
+                  <input type="text" placeholder="Digite a senha do seu banco" />
+                  </>
+                )}
+                </>
+                : null }
+    </div>
   )
 }
 
